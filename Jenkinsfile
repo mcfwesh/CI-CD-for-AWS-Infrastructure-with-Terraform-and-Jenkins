@@ -33,6 +33,11 @@ pipeline{
         }
 
         stage('test'){
+            when {
+                expression {
+                    params.executeTests == true
+                }
+            }
 
             steps {
                script {

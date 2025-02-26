@@ -9,11 +9,6 @@ def buildApp() {
 }
 
 def testApp() {
-    when {
-        expression {
-            params.executeTests == true
-        }
-    }
     echo "Testing the app"
 }
 
