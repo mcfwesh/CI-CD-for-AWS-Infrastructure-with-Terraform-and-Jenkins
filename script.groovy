@@ -13,9 +13,11 @@ def pushDocker() {
     withCredentials([
         usernamePassword(credentialsId:'a967aeaf-43d9-49de-a9a1-5725c0918685', usernameVariable: "USER", passwordVariable: "PWD" )
         ]){
-                sh "echo $PWD | docker login -u $USER --password-stdin"
-                sh "docker build -t mcfwesh/java-maven-app:1.1 ."
-                sh "docker push mcfwesh/java-maven-app:1.1"
+            sh """
+                echo $PWD | docker login -u $USER --password-stdin
+                docker build -t mcfwesh/java-maven-app:1.1 .
+                docker push mcfwesh/java-maven-app:1.1
+            """
         }
     echo "Pushing completed!"
 }
