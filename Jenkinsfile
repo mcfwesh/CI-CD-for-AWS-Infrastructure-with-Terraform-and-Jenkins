@@ -3,54 +3,39 @@ pipeline{
 
     agent any
 
-    // environment {
-    //     USERNAMEPWD = credentials('519d8533-cffc-47a6-a958-955bb6578fbd')
-    // }
-
-    parameters {
-        choice(name: 'VERSION', description: 'App version', choices:['1.1', '1.2', '1.3'])
-        booleanParam(name: 'executeTests', description: 'Test Exec', defaultValue: true)
+    tools {
+        maven 'maven-3.9'
     }
+
+    // parameters {
+    //     choice(name: 'VERSION', description: 'App version', choices:['1.1', '1.2', '1.3'])
+    //     booleanParam(name: 'executeTests', description: 'Test Exec', defaultValue: true)
+    // }
 
     stages {
 
-        stage('init') {
-            steps {
-                script {
-                    gv = load "script.groovy"
-                }
-            }
-
-        }
-
-        stage('build'){
+        stage('build jar file'){
 
             steps {
                script {
-                gv.buildApp()
+                gv.buildJar()
                }
             }
         }
 
-        stage('test'){
-            when {
-                expression {
-                    params.executeTests == true
-                }
-            }
+        stage('build docker image') {
 
             steps {
                script {
-                gv.testApp()
+                gv.buildDocker()
                }
             }
         }
 
-        stage('deploy'){
+        stage('push docker image'){
             steps {
                script {
-                env.ENV = input message: "Select the deployment environment", ok: "Done!", parameters: [choice(name: 'ENV', description: 'ENV choice', choices:['dev', 'qa', 'prod'])]
-                gv.deployApp()
+                    gv.pushDocker()
                }
 
             }
