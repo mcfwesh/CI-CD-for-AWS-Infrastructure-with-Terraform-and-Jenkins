@@ -11,7 +11,7 @@ def buildDocker() {
 def pushDocker() {
   echo "Pushing image to dockerhub repo... "
     withCredentials([
-        usernamePassword(credentials:'a967aeaf-43d9-49de-a9a1-5725c0918685', usernameVariable: USER, passwordVariable: PWD )
+        usernamePassword(credentials:'a967aeaf-43d9-49de-a9a1-5725c0918685', usernameVariable: "USER", passwordVariable: "PWD" )
         ]){
                 sh "echo ${PWD} | docker login -u ${USER} --password-stdin"
                 sh "docker build -t mcfwesh/java-maven-app:1.1 ."
