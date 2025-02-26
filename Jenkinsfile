@@ -16,7 +16,7 @@ pipeline{
                 withCredentials([
                     usernamePassword(credentials:'519d8533-cffc-47a6-a958-955bb6578fbd', usernameVariable: USER, passwordVariable: PWDD )
                 ]){
-                    sh "Second cred: ${USER - PWDD}"
+                    sh "Second cred: ${USER} - ${PWD}"
                 }
             }
         }
