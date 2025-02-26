@@ -23,6 +23,11 @@ pipeline{
         }
 
         stage('build jar file'){
+            when {
+                expression {
+                    BRANCH_NAME == 'jenkins_jobs'
+                }
+            }
 
             steps {
                script {
@@ -32,6 +37,11 @@ pipeline{
         }
 
         stage('build docker image') {
+            when {
+                expression {
+                    BRANCH_NAME == 'jenkins_jobs'
+                }
+            }
 
             steps {
                script {
