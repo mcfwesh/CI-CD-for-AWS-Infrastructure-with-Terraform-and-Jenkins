@@ -1,3 +1,4 @@
+def gv
 pipeline{
 
     agent any
@@ -13,36 +14,39 @@ pipeline{
 
     stages {
 
+        stage('init') {
+            steps {
+                script {
+                    gv = load "script.groovy"
+                }
+            }
+
+        }
+
         stage('build'){
 
             steps {
-                echo "Building the app"
-                // echo "Get first cred: ${USERNAMEPWD}"
-                // withCredentials([
-                //     usernamePassword(credentials:'519d8533-cffc-47a6-a958-955bb6578fbd', usernameVariable: USER, passwordVariable: PWDD )
-                // ]){
-                //     sh "Second cred: ${USER} - ${PWD}"
-                // }
+               script {
+                gv.buildApp()
+               }
             }
         }
 
         stage('test'){
-            when {
-                expression {
-                    params.executeTests == true
-                }
-            }
 
             steps {
-                echo "Testing the app"
-
+               script {
+                gv.testApp()
+               }
             }
         }
 
         stage('deploy'){
 
             steps {
-                echo "Deploying the app, version ${params.VERSION}"
+               script {
+                gv.deployApp()
+               }
 
             }
         }
