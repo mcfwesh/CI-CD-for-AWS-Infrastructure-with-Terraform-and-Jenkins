@@ -13,7 +13,7 @@ def testApp() {
 }
 
 def deployApp() {
-  echo "Deploying the app, version ${params.VERSION}"
+  echo "Deploying the app to ${ENV}, version ${params.VERSION}"
 }
 
 return this
