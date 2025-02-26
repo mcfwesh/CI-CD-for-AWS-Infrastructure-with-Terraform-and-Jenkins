@@ -51,6 +51,12 @@ pipeline{
         }
 
         stage('push docker image'){
+            when {
+                expression {
+                    BRANCH_NAME == 'jenkins_jobs'
+                }
+            }
+
             steps {
                script {
                     gv.pushDocker()
