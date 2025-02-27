@@ -1,11 +1,22 @@
+def incrementVersion() {
+    sh """
+        mvn build-helper:parse-version versions:set /
+        -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} /
+        versions:commit
+    """
+    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+    def version = matcher[0][1]
+    env.IMAGE_NAME = "$version.$BUILD_NUMBER"
+}
+
 def buildJar() {
     echo "Building the app...."
-    sh 'mvn package'
+    sh 'mvn clean package'
 }
 
 def buildDocker() {
     echo "Building the image...."
-     sh "docker build -t mcfwesh/java-maven-app:1.1 ."
+     sh "docker build -t mcfwesh/java-maven-app:$IMAGE_NAME ."
 }
 
 def pushDocker() {
@@ -15,8 +26,7 @@ def pushDocker() {
         ]){
             sh """
                 echo $PWD | docker login -u $USER --password-stdin
-                docker build -t mcfwesh/java-maven-app:1.1 .
-                docker push mcfwesh/java-maven-app:1.1
+                docker push mcfwesh/java-maven-app:$IMAGE_NAME
             """
         }
     echo "Pushing completed!"

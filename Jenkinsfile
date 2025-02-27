@@ -13,6 +13,13 @@ pipeline{
     // }
 
     stages {
+        stage('increment') {
+            steps {
+                script {
+                    gv.incrementVersion()
+                }
+            }
+        }
 
         stage('init') {
             steps {
