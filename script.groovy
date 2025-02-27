@@ -1,5 +1,5 @@
 def incrementVersion() {
-    // echo "Incrementing version..."
+    echo "Incrementing version..."
     // sh 'mvn build-helper:parse-version versions:set \
     //     -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
     //     versions:commit'
@@ -9,17 +9,17 @@ def incrementVersion() {
 }
 
 def buildJar() {
-    // echo "Building the app...."
+    echo "Building the app...."
     // sh 'mvn clean package'
 }
 
 def buildDocker() {
-    // echo "Building the image...."
+    echo "Building the image...."
     //  sh "docker build -t mcfwesh/java-maven-app:$IMAGE_NAME ."
 }
 
 def pushDocker() {
-//   echo "Pushing image to dockerhub repo... "
+  echo "Pushing image to dockerhub repo... "
 //     withCredentials([
 //         usernamePassword(credentialsId:'a967aeaf-43d9-49de-a9a1-5725c0918685', usernameVariable: "USER", passwordVariable: "PWD" )
 //         ]){
@@ -32,7 +32,7 @@ def pushDocker() {
 }
 
 def commitToRepo() {
-    // echo "Commiting to git repo..."
+    echo "Commiting to git repo..."
     // withCredentials([
     // usernamePassword(credentialsId:'a30f485a-77fe-4892-bbd8-4cbbeb4f93a9', usernameVariable: "USER", passwordVariable: "PWD" )
     // ]){
@@ -45,13 +45,13 @@ def commitToRepo() {
     //         git push origin HEAD:jenkins-jobs
     //     """
     // }
+}
 
 def deployViaEC2() {
     def buildContainer = "docker run -d -p 3000:3080 mcfwesh/react-node-app:2.0"
     sshagent(['ec2-access']) {
         sh "ssh -o StrictHostKeyChecking=no ec2-user@44.210.87.216 $buildContainer"
     }
-}
 }
 
 return this
