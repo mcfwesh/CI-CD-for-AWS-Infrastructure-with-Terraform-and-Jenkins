@@ -21,47 +21,47 @@ pipeline{
             }
         }
 
-        stage('increment') {
-            steps {
-                script {
-                    gv.incrementVersion()
-                }
-            }
-        }
+        // stage('increment') {
+        //     steps {
+        //         script {
+        //             gv.incrementVersion()
+        //         }
+        //     }
+        // }
 
-        stage('build jar file'){
-            steps {
-               script {
-                gv.buildJar()
-               }
-            }
-        }
+        // stage('build jar file'){
+        //     steps {
+        //        script {
+        //         gv.buildJar()
+        //        }
+        //     }
+        // }
 
-        stage('build docker image') {
+        // stage('build docker image') {
 
-            steps {
-               script {
-                gv.buildDocker()
-               }
-            }
-        }
+        //     steps {
+        //        script {
+        //         gv.buildDocker()
+        //        }
+        //     }
+        // }
 
-        stage('push docker image'){
-            steps {
-               script {
-                    gv.pushDocker()
-               }
+        // stage('push docker image'){
+        //     steps {
+        //        script {
+        //             gv.pushDocker()
+        //        }
 
-            }
-        }
+        //     }
+        // }
 
-        stage('commit to repo') {
-            steps {
-                script {
-                    gv.commitToRepo()
-                }
-            }
-        }
+        // stage('commit to repo') {
+        //     steps {
+        //         script {
+        //             gv.commitToRepo()
+        //         }
+        //     }
+        // }
 
         stage('aws ec2 build container!') {
             steps {
