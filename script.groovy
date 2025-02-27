@@ -50,7 +50,7 @@ def commitToRepo() {
 def deployViaEC2() {
     def buildContainer = "docker run -d -p 3000:3080 mcfwesh/react-node-app:2.0"
     sshagent(['ec2-access']) {
-        sh "ssh -o StrictHostKeyChecking=no ec2-user@44.210.87.216 $buildContainer"
+        sh "ssh -o StrictHostKeyChecking=no ec2-user@44.210.87.216 ${buildContainer}"
     }
 }
 
