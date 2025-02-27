@@ -54,5 +54,13 @@ pipeline{
 
             }
         }
+
+        stage('commit to git repo') {
+            steps {
+                script {
+                    gv.commitToRepo()
+                }
+            }
+        }
     }
 }

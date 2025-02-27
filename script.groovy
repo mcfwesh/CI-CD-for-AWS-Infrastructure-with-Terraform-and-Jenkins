@@ -31,4 +31,19 @@ def pushDocker() {
     echo "Pushing completed!"
 }
 
+def commitToRepo() {
+    echo "Commiting to git repo..."
+    withCredentials([
+    usernamePassword(credentialsId:'a30f485a-77fe-4892-bbd8-4cbbeb4f93a9', usernameVariable: "USER", passwordVariable: "PWD" )
+    ]){
+        sh """
+            git config --global user.email "jenkins@example.com"
+            git config --global user.name "jenkins"
+            git add .
+            git commit -m "ci: incrementing version"
+            git push origin jenkins-jobs
+        """
+    }
+}
+
 return this
