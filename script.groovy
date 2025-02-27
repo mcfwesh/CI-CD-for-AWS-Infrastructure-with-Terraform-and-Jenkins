@@ -19,7 +19,7 @@ def pushDocker() {
                 docker push mcfwesh/java-maven-app:1.1
             """
         }
-    echo "Pushing completed!"
+    echo "Pushing completed!!"
 }
 
 return this
