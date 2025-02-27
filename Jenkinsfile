@@ -63,7 +63,7 @@ pipeline{
             }
         }
 
-        stage('aws ec2 build container') {
+        stage('aws ec2 build container!') {
             steps {
                 script {
                     gv.deployViaEC2()
