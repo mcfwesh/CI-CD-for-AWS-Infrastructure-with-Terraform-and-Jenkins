@@ -13,18 +13,18 @@ pipeline{
     // }
 
     stages {
-        stage('increment') {
-            steps {
-                script {
-                    gv.incrementVersion()
-                }
-            }
-        }
-
         stage('init') {
             steps {
                 script {
                     gv = load "script.groovy"
+                }
+            }
+        }
+
+        stage('increment') {
+            steps {
+                script {
+                    gv.incrementVersion()
                 }
             }
         }
