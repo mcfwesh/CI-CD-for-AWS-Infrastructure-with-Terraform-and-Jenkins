@@ -41,7 +41,7 @@ def commitToRepo() {
             git config --global user.name "jenkins"
             git add .
             git commit -m "ci: incrementing version"
-            git push origin jenkins-jobs
+            git push origin HEAD:jenkins-jobs
         """
     }
 }
