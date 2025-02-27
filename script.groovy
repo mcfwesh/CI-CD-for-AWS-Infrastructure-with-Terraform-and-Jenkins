@@ -39,7 +39,7 @@ def commitToRepo() {
         sh """
             git config --global user.email "jenkins@example.com"
             git config --global user.name "jenkins"
-            git remote set-url origin https://$USER:$PWD@gitlab.com/mcfwesh/jenkins-java-maven-app.git
+            git remote set-url origin https://${USER}:${PWD}@gitlab.com/mcfwesh/jenkins-java-maven-app.git
             git add .
             git commit -m "ci: incrementing version"
             git push origin HEAD:jenkins-jobs
