@@ -55,18 +55,18 @@ pipeline{
             }
         }
 
-        stage('commit to repo') {
-            steps {
-                script {
-                    gv.commitToRepo()
-                }
-            }
-        }
-
         stage('aws ec2 build container!') {
             steps {
                 script {
                     gv.deployViaEC2()
+                }
+            }
+        }
+
+        stage('commit to repo') {
+            steps {
+                script {
+                    gv.commitToRepo()
                 }
             }
         }
