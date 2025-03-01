@@ -48,7 +48,7 @@ def commitToRepo() {
 }
 
 def deployViaEC2() {
-    def buildContainer = "bash ./server-cmds.sh $IMAGE_NAME"
+    def buildContainer = "bash ./server-cmds.sh ${IMAGE_NAME}"
     sshagent(['ec2-access']) {
         sh """
             scp docker-compose.yml ec2-user@44.210.87.216:/home/ec2-user
