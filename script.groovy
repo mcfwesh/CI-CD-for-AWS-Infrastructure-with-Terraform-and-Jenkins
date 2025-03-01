@@ -52,6 +52,7 @@ def deployViaEC2() {
     sshagent(['ec2-access']) {
         sh """
             scp docker-compose.yml ec2-user@44.210.87.216:/home/ec2-user
+            scp server-cmds.sh ec2-user@44.210.87.216:/home/ec2-user
             ssh -o StrictHostKeyChecking=no ec2-user@44.210.87.216 ${buildContainer}
         """
     }
