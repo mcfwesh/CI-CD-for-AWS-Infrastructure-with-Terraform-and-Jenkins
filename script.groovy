@@ -65,7 +65,7 @@ def deployViaEC2() {
 def commitToRepo() {
     echo "Commiting to git repo..."
     withCredentials([
-    usernamePassword(credentialsId:'gitlab-login', usernameVariable: "USER", passwordVariable: "PWD" )
+    usernamePassword(credentialsId:'gitlab-access', usernameVariable: "USER", passwordVariable: "PWD" )
     ]){
         sh """
             git config --global user.email "jenkins@example.com"
