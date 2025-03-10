@@ -35,7 +35,7 @@ def terraformProvisioning() {
     dir("terraform") {
         sh "terraform init"
         sh "terraform apply --auto-approve"
-        EC2_PUBLIC_IP = sh(
+        env.EC2_PUBLIC_IP = sh(
             script: "terraform output tf_app_server_1_public_ip",
             returnStdout: true
         ).trim()
@@ -44,7 +44,9 @@ def terraformProvisioning() {
 
 def deployViaEC2() {
     echo "Waiting for EC2 instance provisioning ..."
-    sleep(90)
+    if (env.EC2_PUBLIC_IP.isEmpty()) {
+        sleep(90)
+    }
 
     echo "Deploying docker image to EC2 ...."
 
