@@ -73,7 +73,7 @@ def commitToRepo() {
             git remote set-url origin https://${USER}:${PWD}@gitlab.com/mcfwesh/jenkins-java-maven-app.git
             git add .
             git commit -m "ci: incrementing version"
-            git push origin HEAD:jenkins-jobs
+            git push origin HEAD:${BRANCH_NAME}
         """
     }
 }
