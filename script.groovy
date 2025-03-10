@@ -36,7 +36,7 @@ def terraformProvisioning() {
         sh "terraform init"
         sh "terraform apply --auto-approve"
         EC2_PUBLIC_IP = sh(
-            script: "terraform output tf_app_server_1_public_ip"
+            script: "terraform output tf_app_server_1_public_ip",
             returnStdout: true
         ).trim()
     }
