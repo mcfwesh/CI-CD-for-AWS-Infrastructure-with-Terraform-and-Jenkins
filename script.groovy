@@ -49,7 +49,7 @@ def deployViaEC2() {
     }
 
     echo "Deploying docker image to EC2 ...."
-
+    echo "version - ${IMAGE_NAME}"
     def buildContainer = "bash ./server-cmds.sh ${IMAGE_NAME} ${DOCKER_CRED_USR} ${DOCKER_CRED_PSW}"
     def ec2Instance = "ec2-user@${EC2_PUBLIC_IP}"
 
