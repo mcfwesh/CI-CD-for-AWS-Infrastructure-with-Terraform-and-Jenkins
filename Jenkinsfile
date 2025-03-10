@@ -55,7 +55,23 @@ pipeline{
             }
         }
 
+        stage('provision infrastructure') {
+            environment {
+                AWS_ACCESS_KEY_ID = credentials("jenkins-aws-access-key-id")
+                AWS_SECRET_ACCESS_KEY = credentials("jenkins-aws-secret-access-key")
+                TF_VAR_env = "test"
+            }
+            steps {
+                script {
+                    gv.terraformProvisioning()
+                }
+            }
+        }
+
         stage('aws ec2 build container!') {
+            environment {
+                DOCKER_CRED = credentials('docker-hub')
+            }
             steps {
                 script {
                     gv.deployViaEC2()

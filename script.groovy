@@ -21,7 +21,7 @@ def buildDocker() {
 def pushDocker() {
   echo "Pushing image to dockerhub repo... "
     withCredentials([
-        usernamePassword(credentialsId:'a967aeaf-43d9-49de-a9a1-5725c0918685', usernameVariable: "USER", passwordVariable: "PWD" )
+        usernamePassword(credentialsId:'docker-hub', usernameVariable: "USER", passwordVariable: "PWD" )
         ]){
             sh """
                 echo $PWD | docker login -u $USER --password-stdin
@@ -31,10 +31,39 @@ def pushDocker() {
     echo "Pushing completed!"
 }
 
+def terraformProvisioning() {
+    dir("terraform") {
+        sh "terraform init"
+        sh "terraform apply --auto-approve"
+        EC2_PUBLIC_IP = sh(
+            script: "terraform output tf_app_server_1_public_ip"
+            returnStdout: true
+        ).trim()
+    }
+}
+
+def deployViaEC2() {
+    echo "Waiting for EC2 instance provisioning ..."
+    sleep(90)
+
+    echo "Deploying docker image to EC2 ...."
+
+    def buildContainer = "bash ./server-cmds.sh ${IMAGE_NAME} ${DOCKER_CRED_USR} ${DOCKER_CRED_PSW}"
+    def ec2Instance = ec2-user@${EC2_PUBLIC_IP}
+
+    sshagent(['docker-ec2-server']) {
+        sh """
+            scp -o StrictHostKeyChecking=no docker-compose.yml ${ec2Instance}:/home/ec2-user
+            scp -o StrictHostKeyChecking=no server-cmds.sh ${ec2Instance}:/home/ec2-user
+            ssh -o StrictHostKeyChecking=no ${ec2Instance} ${buildContainer}
+        """
+    }
+}
+
 def commitToRepo() {
     echo "Commiting to git repo..."
     withCredentials([
-    usernamePassword(credentialsId:'a30f485a-77fe-4892-bbd8-4cbbeb4f93a9', usernameVariable: "USER", passwordVariable: "PWD" )
+    usernamePassword(credentialsId:'gitlab-login', usernameVariable: "USER", passwordVariable: "PWD" )
     ]){
         sh """
             git config --global user.email "jenkins@example.com"
@@ -43,17 +72,6 @@ def commitToRepo() {
             git add .
             git commit -m "ci: incrementing version"
             git push origin HEAD:jenkins-jobs
-        """
-    }
-}
-
-def deployViaEC2() {
-    def buildContainer = "bash ./server-cmds.sh ${IMAGE_NAME}"
-    sshagent(['ec2-access']) {
-        sh """
-            scp docker-compose.yml ec2-user@44.210.87.216:/home/ec2-user
-            scp server-cmds.sh ec2-user@44.210.87.216:/home/ec2-user
-            ssh -o StrictHostKeyChecking=no ec2-user@44.210.87.216 ${buildContainer}
         """
     }
 }
