@@ -32,11 +32,6 @@ def pushDocker() {
 }
 
 def terraformProvisioning() {
-    dir("terraform/remote-backend") {
-        sh "terraform init"
-        sh "terraform apply --auto-approve"
-    }
-
     dir("terraform/provisioning") {
         sh "terraform init"
         sh "terraform apply --auto-approve"
