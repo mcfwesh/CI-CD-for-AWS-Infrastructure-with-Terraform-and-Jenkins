@@ -3,16 +3,12 @@ target
 .vscode
 .vscode/*
 # local .terraform dir
-terraform/provisioning/.terraform/*
-terraform/remote-backend/.terraform/*
+terraform/*/.terraform/*
 
 # tf state files
-terraform/provisioning/*.tfstate
-terraform/remote-backend/*.tfstate.*
-terraform/provisioning/.terraform/*
-terraform/remote-backend/.terraform/*
+terraform/*/*.tfstate
+terraform/*/*.tfstate.*
 
 # tf variable files, may include sensitive data
-terraform/provisioning/*.tfvars
-terraform/remote-backend/.terraform/*
+terraform/*/*.tfvars
 
