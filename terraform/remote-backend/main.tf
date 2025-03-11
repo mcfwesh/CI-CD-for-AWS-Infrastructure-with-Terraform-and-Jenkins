@@ -19,11 +19,6 @@ resource "aws_s3_bucket" "tf_app_bucket" {
   }
 }
 
-resource "aws_s3_bucket_acl" "tf_app_bucket_acl" {
-  bucket = aws_s3_bucket.tf_app_bucket.id
-  acl    = "private"
-}
-
 resource "aws_s3_bucket_versioning" "tf_app_bucket_versioning" {
   bucket = aws_s3_bucket.tf_app_bucket.id
   versioning_configuration {
