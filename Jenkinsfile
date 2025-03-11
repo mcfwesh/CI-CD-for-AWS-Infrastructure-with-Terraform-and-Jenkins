@@ -21,39 +21,39 @@ pipeline{
             }
         }
 
-        stage('increment') {
-            steps {
-                script {
-                    gv.incrementVersion()
-                }
-            }
-        }
+        // stage('increment') {
+        //     steps {
+        //         script {
+        //             gv.incrementVersion()
+        //         }
+        //     }
+        // }
 
-        stage('build jar file'){
-            steps {
-               script {
-                gv.buildJar()
-               }
-            }
-        }
+        // stage('build jar file'){
+        //     steps {
+        //        script {
+        //         gv.buildJar()
+        //        }
+        //     }
+        // }
 
-        stage('build docker image') {
+        // stage('build docker image') {
 
-            steps {
-               script {
-                gv.buildDocker()
-               }
-            }
-        }
+        //     steps {
+        //        script {
+        //         gv.buildDocker()
+        //        }
+        //     }
+        // }
 
-        stage('push docker image'){
-            steps {
-               script {
-                    gv.pushDocker()
-               }
+        // stage('push docker image'){
+        //     steps {
+        //        script {
+        //             gv.pushDocker()
+        //        }
 
-            }
-        }
+        //     }
+        // }
 
         stage('provision infrastructure') {
             environment {
@@ -64,28 +64,31 @@ pipeline{
             }
             steps {
                 script {
-                    gv.terraformProvisioning()
+                        dir("terraform") {
+        sh "terraform destroy"
+    }
+                    // gv.terraformProvisioning()
                 }
             }
         }
 
-        stage('aws ec2 build container!') {
-            environment {
-                DOCKER_CRED = credentials('docker-hub')
-            }
-            steps {
-                script {
-                    gv.deployViaEC2()
-                }
-            }
-        }
+        // stage('aws ec2 build container!') {
+        //     environment {
+        //         DOCKER_CRED = credentials('docker-hub')
+        //     }
+        //     steps {
+        //         script {
+        //             gv.deployViaEC2()
+        //         }
+        //     }
+        // }
 
-        stage('commit to repo') {
-            steps {
-                script {
-                    gv.commitToRepo()
-                }
-            }
-        }
+        // stage('commit to repo') {
+        //     steps {
+        //         script {
+        //             gv.commitToRepo()
+        //         }
+        //     }
+        // }
     }
 }
