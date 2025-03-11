@@ -3,6 +3,7 @@ target
 .vscode
 .vscode/*
 # local .terraform dir
+terraform/remote-backend
 terraform/remote-backend/*
 terraform/provisioning/.terraform/*
 
