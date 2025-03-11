@@ -65,7 +65,7 @@ pipeline{
             steps {
                 script {
                         dir("terraform") {
-        sh "terraform destroy"
+        sh "terraform apply -destroy --auto-approve"
     }
                     // gv.terraformProvisioning()
                 }
