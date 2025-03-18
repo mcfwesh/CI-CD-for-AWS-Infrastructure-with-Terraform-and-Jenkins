@@ -47,7 +47,6 @@ This project aims to streamline the deployment of a web application on AWS by le
      - Using SSH to securely copy the necessary files (like `docker-compose.yml` and `server-cmds.sh`) to the EC2 instance.
      - Executing the deployment command on the EC2 instance to start the application using the specified Docker image.
 
-
 ## Repository Structure
 
 - **terraform/**
@@ -85,3 +84,12 @@ This project aims to streamline the deployment of a web application on AWS by le
 - **Docker**: Containerizes the application for consistent deployment environments.
 
 ## Screenshots
+
+- ![AWS S3 Backend](screenshots/aws-s3-backend.png)
+  *AWS S3 bucket for remote state storage.*
+
+- ![AWS EC2 Instance](screenshots/aws-ec2.png)
+  *Provisioned EC2 instance configuration.*
+
+- ![Jenkins Pipeline](screenshots/jenkins.png)
+  *Jenkins pipeline execution stages.*
