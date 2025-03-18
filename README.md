@@ -27,24 +27,26 @@ This project aims to streamline the deployment of a web application on AWS by le
 ## Learning Progression/Steps
 
 1. **Initialize Terraform**
-
    - Navigate to the remote backend directory and run the initialization command to set up the backend.
    - Command: `cd terraform/remote-backend && terraform init`
 
 2. **Provision Infrastructure**
-
-   - The infrastructure provisioning is automated through the Jenkins pipeline. The `provision infrastructure` stage in the Jenkinsfile applies the Terraform configuration to provision the defined infrastructure on AWS.
+   - The infrastructure provisioning is automated through the Jenkins pipeline. The `provision infrastructure` stage in the Jenkinsfile applies the Terraform configuration to provision the defined infrastructure on AWS. 
+   - During this stage, the `terraformProvisioning` function is executed, which:
+     - Initializes the Terraform configuration in the `terraform/provisioning` directory.
+     - Applies the Terraform scripts to create the necessary AWS resources.
+     - Dynamically retrieves the public IP of the provisioned EC2 instance using the command `terraform output tf_app_server_1_public_ip`, which is stored in the environment variable `EC2_PUBLIC_IP` for later use.
 
 3. **Build and Push Docker Image**
-
    - In the Jenkins pipeline, the `build docker image` stage builds the Docker image and pushes it to the Docker registry.
 
 4. **Deploy Application**
+   - The `aws ec2 build container!` stage in the Jenkins pipeline deploys the application on the provisioned EC2 instance. 
+   - The `deployViaEC2` function handles this process by:
+     - Waiting for the EC2 instance to be fully provisioned. If the public IP is not yet available, it sleeps for 90 seconds.
+     - Using SSH to securely copy the necessary files (like `docker-compose.yml` and `server-cmds.sh`) to the EC2 instance.
+     - Executing the deployment command on the EC2 instance to start the application using the specified Docker image.
 
-   - The `aws ec2 build container!` stage in the Jenkins pipeline deploys the application on the provisioned EC2 instance.
-
-5. **Access Application**
-   - Access the application via the public IP of the EC2 instance on port 8080.
 
 ## Repository Structure
 
@@ -71,6 +73,9 @@ This project aims to streamline the deployment of a web application on AWS by le
     - **Docker Build**: Builds the Docker image and pushes it to the Docker registry.
     - **Provision Infrastructure**: Applies the Terraform configuration to provision AWS resources.
     - **Deploy Application**: Deploys the application on the provisioned EC2 instance.
+
+## Key Configuration
+- Local private and public keys were added to the Jenkins server Docker container to facilitate secure access to the EC2 instance. The owner and group of the `.ssh` folder was changed to `jenkins:jenkins`.
 
 ## Technologies Used
 
