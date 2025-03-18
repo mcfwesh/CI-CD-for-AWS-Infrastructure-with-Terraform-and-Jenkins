@@ -53,7 +53,7 @@ def deployViaEC2() {
     def buildContainer = "bash ./server-cmds.sh ${IMAGE_NAME} ${DOCKER_CRED_USR} ${DOCKER_CRED_PSW}"
     def ec2Instance = "ec2-user@${EC2_PUBLIC_IP}"
 
-    sshagent(['docker-ec2-server']) {
+    sshagent(['ec2-access']) {
         sh """
             scp -o StrictHostKeyChecking=no docker-compose.yml ${ec2Instance}:/home/ec2-user
             scp -o StrictHostKeyChecking=no server-cmds.sh ${ec2Instance}:/home/ec2-user
