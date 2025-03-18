@@ -100,12 +100,21 @@ resource "aws_vpc_security_group_egress_rule" "tf_app_egress" {
   cidr_ipv4         = "0.0.0.0/0"
 }
 
+resource "aws_key_pair" "tf_app_server_1_key_pair" {
+  key_name   = "tf_app_server_1_key_pair"
+  public_key = file(var.public_key_file_path)
+  tags = {
+    Name        = "${var.env}-tf_app_server_1_key_pair"
+    environment = var.env
+  }
+}
+
 resource "aws_instance" "tf_app_server_1" {
   subnet_id                   = aws_subnet.tf_app_public_subnet.id
   ami                         = data.aws_ami.selected_ami.id
   instance_type               = "t3.micro"
   vpc_security_group_ids      = [aws_security_group.tf_app_sg.id]
-  key_name                    = "docker-server"
+  key_name                    = aws_key_pair.tf_app_server_1_key_pair.key_name
   user_data                   = file("user-data-script.sh")
   user_data_replace_on_change = true
   tags = {

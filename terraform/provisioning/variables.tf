@@ -16,3 +16,7 @@ variable "my_ip" {
 variable "jenkins_server_ip" {
   default = "159.203.13.189/32"
 }
+
+variable "public_key_file_path" {
+  default = "~/.ssh/id_rsa.pub"
+}
