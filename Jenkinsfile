@@ -7,11 +7,6 @@ pipeline{
         maven 'maven-3.9'
     }
 
-    // parameters {
-    //     choice(name: 'VERSION', description: 'App version', choices:['1.1', '1.2', '1.3'])
-    //     booleanParam(name: 'executeTests', description: 'Test Exec', defaultValue: true)
-    // }
-
     stages {
         stage('init') {
             steps {
