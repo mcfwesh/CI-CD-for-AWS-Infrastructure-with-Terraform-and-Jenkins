@@ -2,7 +2,7 @@
 
 This project automates the deployment of a scalable application infrastructure on AWS using **Terraform** for infrastructure as code and **Jenkins** for continuous integration and deployment.
 
-## Tasks from Module 12
+## Related Demo Tasks from Module 12
 
 ### **"Automate AWS Infrastructure"**
 
