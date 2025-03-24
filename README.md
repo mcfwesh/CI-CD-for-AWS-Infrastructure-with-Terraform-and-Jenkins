@@ -6,7 +6,7 @@ This project automates the deployment of a scalable application infrastructure o
 
 - [Introduction](#introduction)
 - [Project Overview](#project-overview)
-- [Learning Progression/Steps](#learning-progressionsteps)
+- [Implementation Steps](#implementation-steps)
 - [Repository Structure](#repository-structure)
 - [Key Configuration](#key-configuration)
 - [Technologies Used](#technologies-used)
@@ -20,7 +20,7 @@ This project aims to streamline the deployment of a web application on AWS by le
 
 The project provisions a VPC, EC2 instances, and deploys Docker containers. It's all managed through Terraform scripts and a Jenkins pipeline, ensuring scalability and reliability. Key AWS services are used for hosting and managing application resources.
 
-## Learning Progression/Steps
+## Implementation Steps
 
 1.  **Initialize Terraform:**
 
